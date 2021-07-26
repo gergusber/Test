@@ -48,7 +48,10 @@ namespace TravelPort.Infrastructure.Repositories
         {
             try
             {
-                return await _context.People.FirstAsync(f => f.Id.Equals(id));
+                var res = await _context.People.FirstAsync(f => f.Id.Equals(id));
+                if (res != null)
+                    return res;
+                return null;
             }
             catch (Exception ex)
             {

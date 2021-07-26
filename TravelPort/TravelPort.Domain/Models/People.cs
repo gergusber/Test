@@ -8,15 +8,20 @@ namespace TravelPort.Domain.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        [Required, MinLength(3)]
+
+        //[StringLength(10000,ErrorMessage = "Name min Length is 3", MinimumLength = 3)]
         public string Name { get; set; }
 
-        [Required]
+        [Required,MinLength(3)]
+        //[StringLength(10000,ErrorMessage = "Surname min Length is 3", MinimumLength = 3)]
         public string Surname { get; set; }
 
-        [Required]
+        [Required, MinLength(3)]
+        //[StringLength(10000,ErrorMessage = "DNI min Length is 3", MinimumLength = 3)]
         public string DNI { get; set; }
 
+     [Phone]   
         public string Phone { get; set; }
     }
 }

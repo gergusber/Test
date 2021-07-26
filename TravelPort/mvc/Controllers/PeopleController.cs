@@ -49,11 +49,11 @@ namespace TravelPoint.Client.Controllers
     
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Surname,DNI,Phone")] People people)
+        public IActionResult Create([Bind("Id,Name,Surname,DNI,Phone")] People people)
         {
             if (ModelState.IsValid)
             {
-               await _service.Add(people);
+                var someObj = _service.Add(people).Result;
                 return RedirectToAction(nameof(Index));
             }
             return View(people);

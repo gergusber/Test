@@ -98,7 +98,50 @@ namespace ClientTests
 
                 var result = controller.Details(null) as ViewResult;
 
-               Assert.Equal(null, result.StatusCode);
+               Assert.Null(result);
+            }
+
+        }
+
+
+        [Fact]
+        public void Create_FailDueInexistentId_ReturnIndex()
+        {
+            using (var context = GetContextWithData())
+            {
+                var repo = new PeopleRepository(context);
+                var serv = new PeopleService(repo as IPeopleRepository);
+                var controller = new PeopleController(serv);
+                var obj = new People()
+                {
+                    Name="German",
+                    Phone="02020",
+                    Surname="Ber",
+                    DNI = "someDni"
+                };
+                var result =controller.Create(obj) as ViewResult;
+                Assert.Null(result); // IF THE result is null we redirect to Index(Correct)
+            }
+        }
+
+
+        [Fact]
+        public void Create_FailDueInexistentId_ReturnCreatePageAgainWithErr()//Not WORKING
+        {
+            using (var context = GetContextWithData())
+            {
+                var repo = new PeopleRepository(context);
+                var serv = new PeopleService(repo as IPeopleRepository);
+                var controller = new PeopleController(serv);
+                var obj = new People()
+                {
+                    Name = null,
+                    Phone = "",
+                    Surname = null,
+                    DNI = null
+                };
+                var result = controller.Create(obj) as ViewResult;
+                Assert.Null(result); //SHOULD Return error since THe model isnt valid
             }
 
         }
